@@ -1,0 +1,67 @@
+---
+import "@/styles/global.css";
+import { site } from "@/data/site";
+import Masthead from "@/components/Masthead.astro";
+import Colophon from "@/components/Colophon.astro";
+import { getImage } from "astro:assets";
+import portrait from "@/assets/portrait.jpg";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.title}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = await getImage({ src: portrait, width: 1200, height: 1200, format: "jpg" });
+const ogImage = new URL(og.src, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@masawhitestone" />
+
+    <!-- Resolve the stored theme before first paint so the page never flashes. -->
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          if (stored === "dark" || stored === "light") {
+            document.documentElement.dataset.theme = stored;
+          }
+        } catch {
+          /* private mode, blocked storage — the media query still applies */
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-paper focus:px-4 focus:py-2 focus:text-sm"
+      >Skip to content</a
+    >
+    <Masthead />
+    <main id="main">
+      <slot />
+    </main>
+    <Colophon />
+  </body>
+</html>

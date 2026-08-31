@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate } from "@/lib/format";
+
+interface Props {
+  entry: CollectionEntry<"media">;
+  compact?: boolean;
+}
+
+const { entry, compact = false } = Astro.props;
+const m = entry.data;
+
+const kindLabel: Record<typeof m.kind, string> = {
+  comment: "Quoted",
+  interview: "Interview",
+  mention: "Mentioned",
+  byline: "Written by me",
+};
+---
+
+<article class="py-6 first:pt-0">
+  <div class="label mb-2 flex flex-wrap items-center gap-x-3">
+    <span>{formatDate(m.date)}</span>
+    <span aria-hidden="true">·</span>
+    <span class="text-accent">{kindLabel[m.kind]}</span>
+  </div>
+
+  <h3 class="mb-2 font-serif text-lg leading-snug sm:text-xl">
+    <a href={m.url} class="link" rel="noopener">{m.title}</a>
+  </h3>
+
+  <p class="mb-2 text-sm text-ink-muted">{m.outlet}</p>
+
+  {
+    !compact && m.note && (
+      <p class="max-w-measure text-sm leading-relaxed text-ink-muted">{m.note}</p>
+    )
+  }
+</article>

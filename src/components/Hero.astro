@@ -1,0 +1,39 @@
+---
+import { Image } from "astro:assets";
+import { site } from "@/data/site";
+import portrait from "@/assets/portrait.jpg";
+---
+
+<section class="mx-auto max-w-band px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
+  <!-- Empty marginalia cell keeps the hero on the same left edge as every
+       section heading below it. -->
+  <div class="lg:grid lg:grid-cols-[7rem_1fr] lg:gap-10">
+    <div aria-hidden="true"></div>
+
+    <div class="grid gap-10 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-14">
+      <div>
+        <h1 class="mb-4 text-4xl leading-[1.1] sm:text-5xl">{site.name}</h1>
+
+        <p class="label mb-6">{site.title}</p>
+
+        <p
+          class="mb-6 max-w-measure font-serif text-lg leading-relaxed text-ink sm:text-xl"
+        >
+          {site.tagline}
+        </p>
+
+        <p class="max-w-measure text-sm text-ink-muted">{site.affiliation}</p>
+      </div>
+
+      <Image
+        src={portrait}
+        alt={`Portrait of ${site.name}`}
+        width={176}
+        height={176}
+        quality={90}
+        loading="eager"
+        class="order-first h-36 w-36 rounded-full border border-rule object-cover sm:order-none sm:h-44 sm:w-44"
+      />
+    </div>
+  </div>
+</section>

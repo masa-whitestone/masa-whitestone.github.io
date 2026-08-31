@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string;
+  title: string;
+  intro?: string;
+}
+
+const { label, title, intro } = Astro.props;
+---
+
+<header class="mx-auto max-w-band px-6 pt-14 pb-10 sm:pt-20">
+  <p class="label mb-3">{label}</p>
+  <h1 class="mb-4 text-3xl sm:text-4xl">{title}</h1>
+  {intro && <p class="max-w-measure text-ink-muted">{intro}</p>}
+  <p class="mt-8">
+    <a href="/" class="link text-sm text-ink-muted">← Back to home</a>
+  </p>
+</header>

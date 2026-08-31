@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import MediaEntry from "@/components/MediaEntry.astro";
+import PageHeader from "@/components/PageHeader.astro";
+
+const media = (await getCollection("media")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<Base
+  title="Media"
+  description="Press coverage, interviews and commentary featuring Masaki Shiraishi."
+>
+  <PageHeader
+    label="Media"
+    title="Media"
+    intro="Coverage in which I was interviewed, quoted, or otherwise mentioned."
+  />
+
+  <div class="mx-auto max-w-band px-6 pb-20">
+    <div class="divide-y divide-rule">
+      {media.map((entry) => <MediaEntry entry={entry} />)}
+    </div>
+  </div>
+</Base>

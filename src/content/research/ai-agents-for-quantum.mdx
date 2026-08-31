@@ -1,0 +1,19 @@
+---
+title: AI Agents for Quantum Computing
+summary: >-
+  Giving language-model agents the ability to actually run and design quantum
+  programs, not just write code that looks plausible.
+order: 1
+keywords: ["LLM agents", "Model Context Protocol", "CUDA-Q", "OpenQASM", "quantum-HPC"]
+---
+
+Most work on AI for science stops at generating code. The harder problem is
+execution: a quantum workload has to be compiled, scheduled across QPUs and HPC
+clusters, and run asynchronously on remote hardware before anyone learns whether
+the idea was any good.
+
+My QCNC 2026 paper closes part of that gap with a Model Context Protocol server
+for quantum execution, letting an agent invoke sampling and expectation-value
+primitives directly against the ABCI-Q hybrid platform and remote hardware. The
+MITOU Target project extends the same idea from execution to design —
+an agent platform that assembles quantum circuits itself.

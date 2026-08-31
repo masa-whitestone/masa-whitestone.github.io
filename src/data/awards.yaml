@@ -1,0 +1,14 @@
+- id: mitou-target-2026
+  title: MITOU Target Program — Quantum Computing
+  titleJa: 未踏ターゲット事業（量子コンピューティング）
+  organization: Information-technology Promotion Agency, Japan (IPA)
+  organizationJa: 独立行政法人情報処理推進機構（IPA）
+  year: 2026
+  date: 2026-06-01
+  url: https://www.ipa.go.jp/jinzai/mitou/target/2026-quantum/gaiyou-yn-1.html
+  featured: true
+  note: >-
+    Selected as a developer in this national R&D program for the project
+    “MCP連携による量子回路自動設計エージェント基盤” (An agent platform for automated
+    quantum circuit design via MCP integration), under project manager
+    Naoki Yamamoto (Director, Keio University Quantum Computing Center).

@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* ---------------------------------------------------------------------------
+   Palette. Warm paper and ink, one accent, nothing else. Every value is a
+   runtime variable so the theme can flip without Tailwind emitting two copies
+   of the stylesheet.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --paper: #fbfaf7;
+  --paper-sunk: #f4f2ec;
+  --ink: #17150f;
+  --ink-muted: #6e6759;
+  --ink-faint: #9b9484;
+  --rule: #e2ddd2;
+  --accent: #a33b21;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #14120e;
+    --paper-sunk: #1b1814;
+    --ink: #ece7dc;
+    --ink-muted: #a09889;
+    --ink-faint: #6f6759;
+    --rule: #322e27;
+    --accent: #e57f5c;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #14120e;
+  --paper-sunk: #1b1814;
+  --ink: #ece7dc;
+  --ink-muted: #a09889;
+  --ink-faint: #6f6759;
+  --rule: #322e27;
+  --accent: #e57f5c;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+
+  --font-serif: "Source Serif 4 Variable", "Source Serif 4", Georgia,
+    "Times New Roman", serif;
+  --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace,
+    SFMono-Regular, monospace;
+
+  /* Editorial measure: prose column, and the wider band that holds the
+     marginalia column beside it. */
+  --spacing-measure: 34rem;
+  --spacing-band: 52rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Anchored sections shouldn't collide with the sticky masthead. */
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Components
+   --------------------------------------------------------------------------- */
+
+@layer components {
+  /* Small caps metadata: section labels, years, venue kickers. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* Underline that grows from the baseline rather than a colour swap. */
+  .link {
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--ink) 25%, transparent);
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    transition:
+      text-decoration-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .link:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+  }
+
+  /* Bibliographic entries hang, the way a reference list should. */
+  .hanging {
+    padding-left: 1.5rem;
+    text-indent: -1.5rem;
+  }
+
+  .rule-top {
+    border-top: 1px solid var(--rule);
+  }
+}

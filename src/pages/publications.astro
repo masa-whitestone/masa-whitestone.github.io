@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import PublicationEntry from "@/components/PublicationEntry.astro";
+import PageHeader from "@/components/PageHeader.astro";
+
+const publications = (await getCollection("publications")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<Base
+  title="Publications"
+  description="Peer-reviewed papers and preprints by Masaki Shiraishi."
+>
+  <PageHeader label="Publications" title="Publications" />
+
+  <div class="mx-auto max-w-band px-6 pb-20">
+    <div class="divide-y divide-rule">
+      {publications.map((entry) => <PublicationEntry entry={entry} />)}
+    </div>
+  </div>
+</Base>

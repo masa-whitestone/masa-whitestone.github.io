@@ -1,0 +1,57 @@
+- id: mitou-target
+  role: Developer, MITOU Target Program — Quantum Computing
+  organization: Information-technology Promotion Agency, Japan (IPA)
+  kind: Contract
+  location: Tokyo, Japan
+  start: 2026-06-01
+  focus: AI for quantum computing
+  url: https://www.ipa.go.jp/jinzai/mitou/target/2026-quantum/gaiyou-yn-1.html
+
+- id: jij
+  role: Quantum Algorithm Researcher
+  organization: JIJ Inc.
+  kind: Internship
+  location: Tokyo, Japan
+  start: 2026-03-01
+  end: 2026-05-31
+  focus: Quantum computing for operations research and machine learning
+
+- id: osaka-qsrh
+  role: Researcher
+  organization: The University of Osaka
+  unit: Quantum Software Research Hub
+  kind: Contract
+  location: Osaka, Japan
+  start: 2025-10-01
+  end: 2026-02-28
+  focus: Loading classical data into quantum circuits
+
+- id: blocq
+  role: Quantum Algorithms Research Intern
+  organization: BlocQ, Inc.
+  kind: Internship
+  location: Tokyo, Japan
+  start: 2025-04-01
+  end: 2025-09-30
+  focus: Solving the ECDLP using Shor’s algorithm
+
+- id: qiskit-fall-fest
+  role: Lead Organizer, Qiskit Fall Fest 2025
+  organization: IBM
+  kind: Community
+  location: Tokyo, Japan
+  start: 2025-09-01
+  end: 2025-11-30
+  focus: >-
+    Organized a university-wide quantum computing workshop as part of the global
+    Qiskit Fall Fest
+
+- id: waseda
+  role: B.Eng. in Applied Physics
+  organization: Waseda University
+  unit: School of Advanced Science and Engineering
+  kind: Education
+  location: Tokyo, Japan
+  start: 2024-04-01
+  end: 2028-03-31
+  focus: Currently in the third year

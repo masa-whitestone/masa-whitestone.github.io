@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatRange } from "@/lib/format";
+
+interface Props {
+  entries: CollectionEntry<"experience">[];
+}
+
+const { entries } = Astro.props;
+---
+
+<ol class="divide-y divide-rule">
+  {
+    entries.map((entry) => {
+      const e = entry.data;
+      return (
+        <li class="grid gap-1 py-5 first:pt-0 last:pb-0 sm:grid-cols-[12rem_1fr] sm:gap-6">
+          <div class="label sm:pt-1">{formatRange(e.start, e.end)}</div>
+
+          <div>
+            <h3 class="font-serif text-lg leading-snug">{e.role}</h3>
+
+            <p class="text-sm text-ink-muted">
+              {e.url ? (
+                <a href={e.url} class="link" rel="noopener">
+                  {e.organization}
+                </a>
+              ) : (
+                e.organization
+              )}
+              {e.unit && <span> · {e.unit}</span>}
+              {e.location && <span class="text-ink-faint"> · {e.location}</span>}
+            </p>
+
+            {e.focus && (
+              <p class="mt-1 max-w-measure text-sm text-ink-muted">{e.focus}</p>
+            )}
+          </div>
+        </li>
+      );
+    })
+  }
+</ol>

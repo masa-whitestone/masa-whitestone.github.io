@@ -1,0 +1,102 @@
+---
+import { site } from "@/data/site";
+import ThemeToggle from "@/components/ThemeToggle.astro";
+
+const nav = [
+  { label: "Research", href: "/#research" },
+  { label: "Publications", href: "/publications" },
+  { label: "Media", href: "/media" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Awards", href: "/#awards" },
+  { label: "Contact", href: "/#contact" },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-rule bg-paper/85 backdrop-blur-sm">
+  <div class="mx-auto flex h-16 max-w-band items-center justify-between gap-6 px-6">
+    <a href="/" class="font-serif text-base tracking-tight whitespace-nowrap">
+      {site.name}
+    </a>
+
+    <nav class="flex items-center gap-5" aria-label="Primary">
+      <!-- Wide screens: the links inline. -->
+      <ul class="hidden items-center gap-5 md:flex">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-sm text-ink-muted transition-colors hover:text-accent"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- Narrow screens: a disclosure menu, no JavaScript involved. -->
+      <details class="menu relative md:hidden">
+        <summary class="label cursor-pointer list-none transition-colors hover:text-accent">
+          <span class="menu-closed">Menu</span>
+          <span class="menu-open">Close</span>
+        </summary>
+        <ul
+          class="absolute right-0 z-50 mt-3 min-w-44 border border-rule bg-paper py-2 shadow-sm"
+        >
+          {
+            nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="block px-4 py-2 text-sm text-ink-muted transition-colors hover:text-accent"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+
+      <ThemeToggle />
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Hide the native disclosure triangle across engines. */
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+  .menu summary::marker {
+    content: "";
+  }
+  .menu .menu-open {
+    display: none;
+  }
+  .menu[open] .menu-closed {
+    display: none;
+  }
+  .menu[open] .menu-open {
+    display: inline;
+  }
+</style>
+
+<script>
+  // A disclosure menu that stays open after navigation feels broken; close it
+  // when focus or a tap lands outside, and on Escape.
+  document.querySelectorAll<HTMLDetailsElement>("details.menu").forEach((menu) => {
+    document.addEventListener("click", (event) => {
+      if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+    });
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") menu.open = false;
+    });
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.open = false;
+      });
+    });
+  });
+</script>

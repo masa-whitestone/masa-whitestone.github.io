@@ -1,0 +1,44 @@
+<button
+  type="button"
+  id="theme-toggle"
+  class="label transition-colors hover:text-accent"
+  aria-label="Toggle colour theme"
+>
+  <span id="theme-toggle-label">Theme</span>
+</button>
+
+<script>
+  const button = document.getElementById("theme-toggle");
+  const label = document.getElementById("theme-toggle-label");
+
+  const active = (): "dark" | "light" => {
+    const explicit = document.documentElement.dataset.theme;
+    if (explicit === "dark" || explicit === "light") return explicit;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+
+  // The button is named for the theme it switches *to*.
+  const render = () => {
+    if (label) label.textContent = active() === "dark" ? "Light" : "Dark";
+  };
+
+  button?.addEventListener("click", () => {
+    const next = active() === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      /* nothing to persist to — the toggle still works for this page view */
+    }
+    render();
+  });
+
+  // Follow the OS while the visitor hasn't made an explicit choice.
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", render);
+
+  render();
+</script>

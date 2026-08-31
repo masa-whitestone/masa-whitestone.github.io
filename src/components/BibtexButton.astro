@@ -1,0 +1,36 @@
+---
+interface Props {
+  bibtex: string;
+}
+
+const { bibtex } = Astro.props;
+---
+
+<button
+  type="button"
+  class="copy-bibtex link cursor-pointer font-mono text-xs"
+  data-bibtex={bibtex}
+>
+  BibTeX
+</button>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".copy-bibtex").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const bibtex = button.dataset.bibtex;
+      if (!bibtex) return;
+      const original = button.textContent;
+      try {
+        await navigator.clipboard.writeText(bibtex);
+        button.textContent = "Copied";
+      } catch {
+        // Clipboard blocked (insecure context, denied permission) — say so
+        // rather than claiming a copy that never happened.
+        button.textContent = "Copy failed";
+      }
+      setTimeout(() => {
+        button.textContent = original;
+      }, 1600);
+    });
+  });
+</script>
