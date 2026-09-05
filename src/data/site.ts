@@ -40,6 +40,6 @@ export const links: ProfileLink[] = [
  * it belongs and stays hidden until then.
  */
 export const cv = {
-  available: false,
+  available: true,
   href: "/cv.pdf",
 } as const;

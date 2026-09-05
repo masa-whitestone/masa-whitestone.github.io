@@ -9,7 +9,7 @@
 
 - id: jij
   role: Quantum Algorithm Researcher
-  organization: JIJ Inc.
+  organization: Jij Inc.
   kind: Internship
   location: Tokyo, Japan
   start: 2026-03-01
@@ -17,7 +17,7 @@
   focus: Quantum computing for operations research and machine learning
 
 - id: osaka-qsrh
-  role: Researcher
+  role: Research Intern
   organization: The University of Osaka
   unit: Quantum Software Research Hub
   kind: Contract
