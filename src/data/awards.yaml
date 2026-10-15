@@ -1,3 +1,17 @@
+- id: nedo-challenge-leapfrog
+  title: LeapFrog Award, NEDO Challenge — Quantum Computing “Solve Social Issues!”
+  titleJa: NEDO懸賞金活用型プログラム／量子コンピュータを用いた社会問題ソリューション開発
+  organization: New Energy and Industrial Technology Development Organization (NEDO)
+  organizationJa: 国立研究開発法人新エネルギー・産業技術総合開発機構（NEDO）
+  year: 2026
+  date: 2026-10-15
+  url: https://qc-challenge.nedo.go.jp/
+  featured: true
+  note: >-
+    An individual award, received for my contribution to a team entry in this
+    national prize-money program, which funds results that address social and
+    industrial problems using quantum computers.
+
 - id: mitou-target-2026
   title: MITOU Target Program — Quantum Computing
   titleJa: 未踏ターゲット事業（量子コンピューティング）
