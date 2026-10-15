@@ -3,6 +3,9 @@
   titleJa: NEDO懸賞金活用型プログラム／量子コンピュータを用いた社会問題ソリューション開発
   organization: New Energy and Industrial Technology Development Organization (NEDO)
   organizationJa: 国立研究開発法人新エネルギー・産業技術総合開発機構（NEDO）
+  context: >-
+    Japan’s national research and development agency, under the Ministry of
+    Economy, Trade and Industry (METI).
   year: 2026
   date: 2026-10-15
   url: https://qc-challenge.nedo.go.jp/
@@ -15,8 +18,11 @@
 - id: mitou-target-2026
   title: MITOU Target Program — Quantum Computing
   titleJa: 未踏ターゲット事業（量子コンピューティング）
-  organization: Information-technology Promotion Agency, Japan (IPA)
+  organization: Innovation Platform Agency, Japan (IPA)
   organizationJa: 独立行政法人情報処理推進機構（IPA）
+  context: >-
+    An incorporated administrative agency under the Ministry of Economy, Trade
+    and Industry (METI).
   year: 2026
   date: 2026-06-01
   url: https://www.ipa.go.jp/jinzai/mitou/target/2026-quantum/gaiyou-yn-1.html

@@ -155,11 +155,14 @@ const researchBodies = await Promise.all(
                   ) : (
                     a.title
                   )}
-                  {a.titleJa && (
-                    <span class="ml-2 text-sm text-ink-faint">{a.titleJa}</span>
-                  )}
                 </h3>
+                {a.titleJa && (
+                  <p class="text-sm text-ink-faint">{a.titleJa}</p>
+                )}
                 <p class="text-sm text-ink-muted">{a.organization}</p>
+                {a.context && (
+                  <p class="max-w-measure text-sm text-ink-faint">{a.context}</p>
+                )}
                 {a.note && (
                   <p class="mt-1 max-w-measure text-sm text-ink-muted">{a.note}</p>
                 )}

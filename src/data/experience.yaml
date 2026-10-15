@@ -1,6 +1,9 @@
 - id: mitou-target
   role: Developer, MITOU Target Program — Quantum Computing
-  organization: Information-technology Promotion Agency, Japan (IPA)
+  organization: Innovation Platform Agency, Japan (IPA)
+  context: >-
+    An incorporated administrative agency under the Ministry of Economy, Trade
+    and Industry (METI).
   kind: Contract
   location: Tokyo, Japan
   start: 2026-06-01

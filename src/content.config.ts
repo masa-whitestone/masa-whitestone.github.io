@@ -71,6 +71,8 @@ const awards = defineCollection({
     titleJa: z.string().optional(),
     organization: z.string(),
     organizationJa: z.string().optional(),
+    /** One line placing an unfamiliar body for readers outside Japan. */
+    context: z.string().optional(),
     year: z.number(),
     date: z.coerce.date(),
     url: z.url().optional(),
@@ -85,6 +87,8 @@ const experience = defineCollection({
     role: z.string(),
     organization: z.string(),
     unit: z.string().optional(),
+    /** One line placing an unfamiliar body for readers outside Japan. */
+    context: z.string().optional(),
     /** Employment basis as stated on my CV: contract, internship, degree… */
     kind: z.string().optional(),
     location: z.string().optional(),

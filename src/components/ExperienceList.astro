@@ -32,6 +32,10 @@ const { entries } = Astro.props;
               {e.location && <span class="text-ink-faint"> · {e.location}</span>}
             </p>
 
+            {e.context && (
+              <p class="max-w-measure text-sm text-ink-faint">{e.context}</p>
+            )}
+
             {e.focus && (
               <p class="mt-1 max-w-measure text-sm text-ink-muted">{e.focus}</p>
             )}
