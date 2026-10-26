@@ -1,0 +1,43 @@
+---
+interface Props {
+  /** Verbatim words only — anything paraphrased belongs in `context`. */
+  quote: string;
+  attribution: string;
+  context?: string;
+  source?: { label: string; href: string };
+}
+
+const { quote, attribution, context, source } = Astro.props;
+---
+
+<section class="border-t border-rule py-16 sm:py-20">
+  <div class="mx-auto max-w-band px-6">
+    <div class="lg:grid lg:grid-cols-[7rem_1fr] lg:gap-10">
+      <div class="label lg:pt-3 lg:text-right">Quoted</div>
+
+      <blockquote>
+        <p class="font-serif text-2xl leading-snug text-balance sm:text-3xl">
+          <span class="text-accent" aria-hidden="true">“</span>{quote}<span
+            class="text-accent"
+            aria-hidden="true">”</span
+          >
+        </p>
+
+        <footer class="mt-5 max-w-measure text-sm text-ink-muted">
+          <span class="text-ink">{attribution}</span>
+          {context && <span> — {context}</span>}
+          {
+            source && (
+              <>
+                {" "}
+                <a href={source.href} class="link" rel="noopener">
+                  {source.label}
+                </a>
+              </>
+            )
+          }
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</section>

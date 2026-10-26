@@ -1,28 +1,46 @@
 ---
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 import { site } from "@/data/site";
 import portrait from "@/assets/portrait.jpg";
+
+// "Where is he now" answered from the same data the timeline uses: anything
+// without an end date, or whose end date hasn't arrived yet.
+const now = new Date();
+const current = (await getCollection("experience"))
+  .filter((entry) => !entry.data.end || entry.data.end > now)
+  .sort((a, b) => b.data.start.getTime() - a.data.start.getTime());
 ---
 
-<section class="mx-auto max-w-band px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
-  <!-- Empty marginalia cell keeps the hero on the same left edge as every
-       section heading below it. -->
+<section class="mx-auto max-w-band px-6 pt-16 pb-16 sm:pt-20 sm:pb-20">
   <div class="lg:grid lg:grid-cols-[7rem_1fr] lg:gap-10">
     <div aria-hidden="true"></div>
 
     <div class="grid gap-10 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-14">
       <div>
-        <h1 class="mb-4 text-4xl leading-[1.1] sm:text-5xl">{site.name}</h1>
+        <h1 class="mb-4 text-5xl leading-[1.05] sm:text-6xl">{site.name}</h1>
 
         <p class="label mb-6">{site.title}</p>
 
         <p
-          class="mb-6 max-w-measure font-serif text-lg leading-relaxed text-ink sm:text-xl"
+          class="mb-8 max-w-measure font-serif text-xl leading-relaxed text-ink sm:text-2xl"
         >
           {site.tagline}
         </p>
 
-        <p class="max-w-measure text-sm text-ink-muted">{site.affiliation}</p>
+        <div class="max-w-measure">
+          <p class="label mb-2">Currently</p>
+          <ul class="space-y-1 text-sm text-ink-muted">
+            {
+              current.map((entry) => (
+                <li>
+                  <span class="text-ink">{entry.data.role}</span>
+                  <span class="text-ink-faint"> · {entry.data.organization}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
 
       <Image

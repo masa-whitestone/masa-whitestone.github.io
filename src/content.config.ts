@@ -10,12 +10,24 @@ import { z } from "astro/zod";
 
 const research = defineCollection({
   loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/research" }),
-  schema: z.object({
-    title: z.string(),
-    summary: z.string(),
-    order: z.number(),
-    keywords: z.array(z.string()).default([]),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      summary: z.string(),
+      order: z.number(),
+      keywords: z.array(z.string()).default([]),
+      /** A published figure illustrating this theme, reproduced from a paper. */
+      figure: z
+        .object({
+          src: image(),
+          alt: z.string(),
+          number: z.string(),
+          caption: z.string(),
+          sourceLabel: z.string().optional(),
+          sourceHref: z.string().optional(),
+        })
+        .optional(),
+    }),
 });
 
 const publications = defineCollection({

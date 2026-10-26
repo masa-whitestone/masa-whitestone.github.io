@@ -5,6 +5,23 @@ summary: >-
   programs, not just write code that looks plausible.
 order: 1
 keywords: ["LLM agents", "Model Context Protocol", "CUDA-Q", "OpenQASM", "quantum-HPC"]
+figure:
+  src: ../../assets/mcp-architecture.png
+  alt: >-
+    Architecture diagram. A natural-language prompt from the user enters
+    run_experiment.sh on the login node, which submits an LLM job via the PBS
+    scheduler to compute node A, where an Ollama LLM drives an MCP host agent.
+    The agent submits a second PBS job to compute node B, where an MCP client
+    and QASM runner server execute circuits through CUDA-Q or dispatch them
+    asynchronously to the Quantinuum Nexus H2-1E emulator, returning results as
+    JSON.
+  number: Fig. 1
+  caption: >-
+    Two-stage PBS batch architecture. The LLM job runs on one compute node;
+    quantum execution is dispatched as a separate PBS job to a CUDA-Q node or
+    the Quantinuum cloud.
+  sourceLabel: arXiv:2604.08318
+  sourceHref: https://arxiv.org/abs/2604.08318
 ---
 
 Most work on AI for science stops at generating code. The harder problem is

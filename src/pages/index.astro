@@ -6,6 +6,8 @@ import Section from "@/components/Section.astro";
 import PublicationEntry from "@/components/PublicationEntry.astro";
 import MediaEntry from "@/components/MediaEntry.astro";
 import ExperienceList from "@/components/ExperienceList.astro";
+import Figure from "@/components/Figure.astro";
+import PullQuote from "@/components/PullQuote.astro";
 import { links, cv } from "@/data/site";
 import { formatMonth } from "@/lib/format";
 
@@ -106,11 +108,40 @@ const researchBodies = await Promise.all(
             {entry.data.keywords.length > 0 && (
               <p class="label mt-3">{entry.data.keywords.join(" · ")}</p>
             )}
+
           </article>
         ))
       }
     </div>
   </Section>
+
+  {
+    research
+      .filter((entry) => entry.data.figure)
+      .map((entry) => (
+        <Figure
+          src={entry.data.figure!.src}
+          alt={entry.data.figure!.alt}
+          number={entry.data.figure!.number}
+          caption={entry.data.figure!.caption}
+          source={
+            entry.data.figure!.sourceLabel && entry.data.figure!.sourceHref
+              ? {
+                  label: entry.data.figure!.sourceLabel,
+                  href: entry.data.figure!.sourceHref,
+                }
+              : undefined
+          }
+        />
+      ))
+  }
+
+  <PullQuote
+    quote="not yet a fully autonomous scientist"
+    attribution="Masaki Shiraishi"
+    context="on Pasqal’s AI system for quantum computing"
+    source={{ label: "Nature, 19 August 2026", href: "https://www.nature.com/articles/d41586-026-02495-4" }}
+  />
 
   <Section
     id="publications"
