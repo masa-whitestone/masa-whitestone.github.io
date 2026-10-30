@@ -1,4 +1,6 @@
 - id: gquat-talk-4
+  title: An AI-Driven Automated Execution Pipeline for Quantum Computing
+  titleJa: AIによる量子計算の自動実行パイプライン
   event: 4th G-QuATaaaalk — Incubation Networking Event
   eventJa: 第4回 G-QuATaaaalk インキュベーション交流会
   host: >-
@@ -10,3 +12,5 @@
   date: 2026-02-27
   location: AIST Tsukuba, Japan
   url: https://unit.aist.go.jp/g-quat/
+  note: >-
+    On the AI-driven quantum execution work behind my QCNC 2026 paper.

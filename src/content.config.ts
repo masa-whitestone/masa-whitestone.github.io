@@ -66,6 +66,7 @@ const talks = defineCollection({
   schema: z.object({
     /** The talk's own title, where it had one; otherwise the event leads. */
     title: z.string().optional(),
+    titleJa: z.string().optional(),
     event: z.string(),
     eventJa: z.string().optional(),
     host: z.string(),

@@ -19,7 +19,9 @@ const t = entry.data;
       {t.title ?? t.event}
     </h3>
 
-    {t.title && <p class="text-sm text-ink-muted">{t.event}</p>}
+    {t.titleJa && <p class="text-sm text-ink-faint">{t.titleJa}</p>}
+
+    {t.title && <p class="mt-1 text-sm text-ink-muted">{t.event}</p>}
     {t.eventJa && <p class="text-sm text-ink-faint">{t.eventJa}</p>}
 
     <p class="mt-1 text-sm text-ink-muted">

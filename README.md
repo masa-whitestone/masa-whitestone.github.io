@@ -21,6 +21,7 @@ a missing or misspelled field fails the build rather than silently rendering bla
 
 | What | Where |
 |---|---|
+| Talks | [`src/data/talks.yaml`](src/data/talks.yaml) |
 | Papers and preprints | [`src/data/publications.yaml`](src/data/publications.yaml) |
 | Press, interviews, quotes | [`src/data/media.yaml`](src/data/media.yaml) |
 | Awards and programs | [`src/data/awards.yaml`](src/data/awards.yaml) |
@@ -30,6 +31,17 @@ a missing or misspelled field fails the build rather than silently rendering bla
 
 The "Selected" block on the front page builds itself from the three most recent
 entries across awards, media and publications — it needs no maintenance.
+
+### After changing a schema
+
+`src/content.config.ts` is read through a cache in `.astro/`, and the dev
+server will keep serving entries parsed under the old schema — a newly added
+field simply renders as nothing. `npm run build` is unaffected. To see the
+change in dev:
+
+```bash
+rm -rf .astro && npx astro sync
+```
 
 ### Adding a CV
 
