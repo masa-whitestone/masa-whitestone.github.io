@@ -5,6 +5,7 @@ import Hero from "@/components/Hero.astro";
 import Section from "@/components/Section.astro";
 import PublicationEntry from "@/components/PublicationEntry.astro";
 import MediaEntry from "@/components/MediaEntry.astro";
+import TalkEntry from "@/components/TalkEntry.astro";
 import ExperienceList from "@/components/ExperienceList.astro";
 import Figure from "@/components/Figure.astro";
 import PullQuote from "@/components/PullQuote.astro";
@@ -16,6 +17,10 @@ const research = (await getCollection("research")).sort(
 );
 
 const publications = (await getCollection("publications")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const talks = (await getCollection("talks")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 
@@ -154,9 +159,15 @@ const researchBodies = await Promise.all(
     </div>
   </Section>
 
+  <Section id="talks" label="03" title="Talks">
+    <div class="divide-y divide-rule">
+      {talks.map((entry) => <TalkEntry entry={entry} />)}
+    </div>
+  </Section>
+
   <Section
     id="media"
-    label="03"
+    label="04"
     title="Media"
     more={media.length > 3 ? { label: "All media", href: "/media" } : undefined}
   >
@@ -165,11 +176,11 @@ const researchBodies = await Promise.all(
     </div>
   </Section>
 
-  <Section id="experience" label="04" title="Experience">
+  <Section id="experience" label="05" title="Experience">
     <ExperienceList entries={experience} />
   </Section>
 
-  <Section id="awards" label="05" title="Awards & Programs">
+  <Section id="awards" label="06" title="Awards & Programs">
     <ol class="divide-y divide-rule">
       {
         awards.map((entry) => {
@@ -205,7 +216,7 @@ const researchBodies = await Promise.all(
     </ol>
   </Section>
 
-  <Section id="contact" label="06" title="Contact">
+  <Section id="contact" label="07" title="Contact">
     <p class="mb-8 max-w-measure font-serif text-lg text-ink">
       Feel free to reach out for collaboration or discussion.
     </p>

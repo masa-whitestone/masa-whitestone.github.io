@@ -61,6 +61,23 @@ const publications = defineCollection({
   }),
 });
 
+const talks = defineCollection({
+  loader: file("src/data/talks.yaml"),
+  schema: z.object({
+    /** The talk's own title, where it had one; otherwise the event leads. */
+    title: z.string().optional(),
+    event: z.string(),
+    eventJa: z.string().optional(),
+    host: z.string(),
+    /** One line placing an unfamiliar body for readers outside Japan. */
+    context: z.string().optional(),
+    date: z.coerce.date(),
+    location: z.string().optional(),
+    url: z.url().optional(),
+    note: z.string().optional(),
+  }),
+});
+
 const media = defineCollection({
   loader: file("src/data/media.yaml"),
   schema: z.object({
@@ -112,4 +129,11 @@ const experience = defineCollection({
   }),
 });
 
-export const collections = { research, publications, media, awards, experience };
+export const collections = {
+  research,
+  publications,
+  talks,
+  media,
+  awards,
+  experience,
+};

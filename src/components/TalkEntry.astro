@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate } from "@/lib/format";
+
+interface Props {
+  entry: CollectionEntry<"talks">;
+}
+
+const { entry } = Astro.props;
+const t = entry.data;
+---
+
+<article class="grid gap-1 py-5 first:pt-0 last:pb-0 sm:grid-cols-[12rem_1fr] sm:gap-6">
+  <div class="label sm:pt-1">{formatDate(t.date)}</div>
+
+  <div>
+    <!-- Where a talk had no published title, the event carries the entry. -->
+    <h3 class="font-serif text-lg leading-snug">
+      {t.title ?? t.event}
+    </h3>
+
+    {t.title && <p class="text-sm text-ink-muted">{t.event}</p>}
+    {t.eventJa && <p class="text-sm text-ink-faint">{t.eventJa}</p>}
+
+    <p class="mt-1 text-sm text-ink-muted">
+      {
+        t.url ? (
+          <a href={t.url} class="link" rel="noopener">
+            {t.host}
+          </a>
+        ) : (
+          t.host
+        )
+      }
+      {t.location && <span class="text-ink-faint"> · {t.location}</span>}
+    </p>
+
+    {t.context && <p class="max-w-measure text-sm text-ink-faint">{t.context}</p>}
+    {t.note && <p class="mt-1 max-w-measure text-sm text-ink-muted">{t.note}</p>}
+  </div>
+</article>
