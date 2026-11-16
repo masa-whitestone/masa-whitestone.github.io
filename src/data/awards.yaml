@@ -1,11 +1,14 @@
 - id: nedo-challenge-leapfrog
-  title: LeapFrog Award, NEDO Challenge — Quantum Computing “Solve Social Issues!”
+  title: LeapFrog Award
+  # Both strings below are the wording NEDO requires — keep them verbatim.
+  program: >-
+    NEDO Challenge, Quantum computing “Solve Social Issues!” (granted by
+    Japan’s Ministry of Economy, Trade and Industry)
   titleJa: NEDO懸賞金活用型プログラム／量子コンピュータを用いた社会問題ソリューション開発
-  organization: New Energy and Industrial Technology Development Organization (NEDO)
+  organization: >-
+    NEDO (New Energy and Industrial Technology Development Organization) under
+    Japan’s Ministry of Economy, Trade and Industry
   organizationJa: 国立研究開発法人新エネルギー・産業技術総合開発機構（NEDO）
-  context: >-
-    Japan’s national research and development agency, under the Ministry of
-    Economy, Trade and Industry (METI).
   year: 2026
   date: 2026-10-15
   url: https://qc-challenge.nedo.go.jp/

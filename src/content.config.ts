@@ -98,6 +98,8 @@ const awards = defineCollection({
   loader: file("src/data/awards.yaml"),
   schema: z.object({
     title: z.string(),
+    /** The programme the award sits within, in any wording the funder requires. */
+    program: z.string().optional(),
     titleJa: z.string().optional(),
     organization: z.string(),
     organizationJa: z.string().optional(),

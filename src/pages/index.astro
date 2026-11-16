@@ -43,7 +43,7 @@ const highlights = [
     date: a.data.date,
     label: "Award",
     title: a.data.title,
-    detail: a.data.organization,
+    detail: a.data.program ?? a.data.organization,
     href: a.data.url,
   })),
   ...media.map((m) => ({
@@ -198,6 +198,7 @@ const researchBodies = await Promise.all(
                     a.title
                   )}
                 </h3>
+                {a.program && <p class="text-sm text-ink">{a.program}</p>}
                 {a.titleJa && (
                   <p class="text-sm text-ink-faint">{a.titleJa}</p>
                 )}
