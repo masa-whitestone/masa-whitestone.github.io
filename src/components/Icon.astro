@@ -1,0 +1,49 @@
+---
+// Icons are inlined at build time from their packages: no icon font, no CDN,
+// no request at runtime. Brand marks come from Simple Icons (CC0); LinkedIn
+// was withdrawn from that set at LinkedIn's request, so it and the generic
+// glyphs come from Tabler's filled set (MIT) to keep one visual weight.
+import email from "@tabler/icons/filled/mail.svg?raw";
+import linkedin from "@tabler/icons/filled/brand-linkedin.svg?raw";
+import cv from "@tabler/icons/filled/file-text.svg?raw";
+import orcid from "simple-icons/icons/orcid.svg?raw";
+import scholar from "simple-icons/icons/googlescholar.svg?raw";
+import github from "simple-icons/icons/github.svg?raw";
+import x from "simple-icons/icons/x.svg?raw";
+import type { IconName } from "@/lib/icons";
+
+const sources: Record<IconName, string> = {
+  email,
+  orcid,
+  scholar,
+  github,
+  linkedin,
+  x,
+  cv,
+};
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+
+// Keep only the drawing: the wrapper below supplies sizing and colour, and
+// the accessible name lives on the link, not the glyph.
+const inner = sources[name]
+  .replace(/^[\s\S]*?<svg[^>]*>/, "")
+  .replace(/<\/svg>\s*$/, "")
+  .replace(/<title>[\s\S]*?<\/title>/, "")
+  .replace(/<path stroke="none" d="M0 0h24v24H0z" fill="none"\s*\/>/, "")
+  .trim();
+---
+
+<svg
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+  set:html={inner}
+/>

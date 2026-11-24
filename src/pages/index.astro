@@ -9,6 +9,7 @@ import TalkEntry from "@/components/TalkEntry.astro";
 import ExperienceList from "@/components/ExperienceList.astro";
 import Figure from "@/components/Figure.astro";
 import PullQuote from "@/components/PullQuote.astro";
+import Icon from "@/components/Icon.astro";
 import { links, cv } from "@/data/site";
 import { formatMonth } from "@/lib/format";
 
@@ -222,27 +223,31 @@ const researchBodies = await Promise.all(
       Feel free to reach out for collaboration or discussion.
     </p>
 
-    <ul class="grid gap-x-10 gap-y-3 sm:grid-cols-2">
+    <ul class="flex flex-wrap gap-x-7 gap-y-6">
       {
-        links.map((link) => (
-          <li class="flex flex-wrap items-baseline gap-x-3">
-            <a href={link.href} class="link text-sm" rel="noopener">
-              {link.label}
+        [
+          ...links,
+          ...(cv.available
+            ? [{ label: "CV", icon: "cv" as const, href: cv.href, handle: "Curriculum Vitae (PDF)" }]
+            : []),
+        ].map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="group flex w-16 flex-col items-center gap-2 text-ink-muted transition-colors hover:text-accent"
+              rel={link.href.startsWith("http") ? "noopener" : undefined}
+              title={link.handle ?? link.label}
+              aria-label={link.handle ? `${link.label}: ${link.handle}` : link.label}
+            >
+              <span class="flex h-12 w-12 items-center justify-center rounded-full border border-rule transition-colors group-hover:border-accent">
+                <Icon name={link.icon} class="h-5 w-5" />
+              </span>
+              <span class="label text-center leading-tight transition-colors group-hover:text-accent">
+                {link.label}
+              </span>
             </a>
-            {link.handle && (
-              <span class="font-mono text-xs text-ink-faint">{link.handle}</span>
-            )}
           </li>
         ))
-      }
-      {
-        cv.available && (
-          <li>
-            <a href={cv.href} class="link text-sm">
-              Curriculum Vitae (PDF)
-            </a>
-          </li>
-        )
       }
     </ul>
   </Section>

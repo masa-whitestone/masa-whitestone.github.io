@@ -21,6 +21,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@tabler/icons": "^3.52.0",
+    "simple-icons": "^16.38.1",
     "typescript": "^5.9.3"
   }
 }
