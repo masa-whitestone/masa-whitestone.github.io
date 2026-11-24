@@ -10,7 +10,7 @@ import ExperienceList from "@/components/ExperienceList.astro";
 import Figure from "@/components/Figure.astro";
 import PullQuote from "@/components/PullQuote.astro";
 import Icon from "@/components/Icon.astro";
-import { links, cv } from "@/data/site";
+import { site, links, cv } from "@/data/site";
 import { formatMonth } from "@/lib/format";
 
 const research = (await getCollection("research")).sort(
@@ -219,8 +219,16 @@ const researchBodies = await Promise.all(
   </Section>
 
   <Section id="contact" label="07" title="Contact">
-    <p class="mb-8 max-w-measure font-serif text-lg text-ink">
+    <p class="mb-3 max-w-measure font-serif text-lg text-ink">
       Feel free to reach out for collaboration or discussion.
+    </p>
+
+    <!-- The address in plain text, so it can be read and copied, not only
+         clicked. -->
+    <p class="mb-10">
+      <a href={`mailto:${site.email}`} class="link font-mono text-sm">
+        {site.email}
+      </a>
     </p>
 
     <ul class="flex flex-wrap gap-x-7 gap-y-6">
