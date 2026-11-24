@@ -13,7 +13,7 @@ const { id, more } = Astro.props;
 <section id={id} class="scroll-mt-20 border-t border-rule py-14 sm:py-16 lg:scroll-mt-8 lg:first-of-type:border-t-0 lg:first-of-type:pt-10">
   <header class="mb-10 flex flex-wrap items-center gap-x-4 gap-y-2">
     <!-- Same node as on the sidebar's wire, so heading and map visibly match. -->
-    <span class="section-node h-[9px] w-[9px] shrink-0 border" data-section-node={id} data-state="future" aria-hidden="true"></span>
+    <span class="qnode shrink-0" data-section-node={id} data-state="future" aria-hidden="true"></span>
     <span class="font-mono text-xs tracking-wider text-accent">{sectionNumber(id)}</span>
     <h2 class="text-3xl sm:text-4xl">{sectionTitle(id)}</h2>
     {
@@ -26,19 +26,3 @@ const { id, more } = Astro.props;
   </header>
   <slot />
 </section>
-
-<style>
-  .section-node {
-    border-color: var(--ink-faint);
-    background: var(--paper);
-    transition: background-color 200ms ease, border-color 200ms ease;
-  }
-  .section-node[data-state="past"] {
-    background: var(--ink-muted);
-    border-color: var(--ink-muted);
-  }
-  .section-node[data-state="active"] {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-</style>

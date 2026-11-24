@@ -84,7 +84,7 @@ const stateOf = (i: number) =>
               data-state={stateOf(i)}
               aria-current={i === activeIndex && active ? "page" : undefined}
             >
-              <span class="node relative z-10 h-[9px] w-[9px] shrink-0 border" aria-hidden="true" />
+              <span class="qnode node z-10 shrink-0" aria-hidden="true" />
               <span class="w-5 font-mono text-[10px] text-ink-faint">{String(i).padStart(2, "0")}</span>
               <span class="wire-label">{s.title}</span>
               {counts[s.id] !== undefined && (
@@ -119,21 +119,8 @@ const stateOf = (i: number) =>
 </aside>
 
 <style>
-  /* Node states: read (filled ink), here (accent), ahead (hollow). */
-  .wire-item .node {
-    border-color: var(--ink-faint);
-    background: var(--paper);
-    transition: background-color 200ms ease, border-color 200ms ease, transform 200ms ease;
-  }
-  .wire-item[data-state="past"] .node {
-    background: var(--ink-muted);
-    border-color: var(--ink-muted);
-  }
-  .wire-item[data-state="active"] .node {
-    background: var(--accent);
-    border-color: var(--accent);
-    transform: scale(1.25);
-  }
+  /* Node shapes and states live in global.css (.qnode); only the label and
+     hover behaviour are specific to the sidebar. */
   .wire-item .wire-label {
     color: var(--ink-muted);
     transition: color 150ms ease;
@@ -142,11 +129,10 @@ const stateOf = (i: number) =>
   .wire-item:hover .wire-label {
     color: var(--ink);
   }
-  .wire-item:hover .node {
+  .wire-item[data-state="future"]:hover .qnode {
     border-color: var(--accent);
   }
   @media (prefers-reduced-motion: reduce) {
-    .wire-item .node,
     .wire-fill {
       transition: none !important;
     }

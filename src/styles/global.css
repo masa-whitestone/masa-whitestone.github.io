@@ -153,4 +153,70 @@
   .rule-top {
     border-top: 1px solid var(--rule);
   }
+
+  /* Section nodes on the wire: read ●, ahead ○, here ⊕ — the "here" mark is
+     a NOT-gate target, with the wire running straight through it. The state
+     sits on the node itself or on its parent link. */
+  .qnode {
+    position: relative;
+    width: 11px;
+    height: 11px;
+    border-radius: 9999px;
+    border: 1px solid var(--ink-faint);
+    background: var(--paper);
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      transform 200ms ease;
+  }
+
+  .qnode::before,
+  .qnode::after {
+    content: "";
+    position: absolute;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  /* The ⊕'s vertical and horizontal strokes, inside the ring. */
+  .qnode::before {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+  }
+
+  .qnode::after {
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    transform: translateY(-50%);
+  }
+
+  :is(.qnode[data-state="past"], [data-state="past"] > .qnode) {
+    background: var(--ink-muted);
+    border-color: var(--ink-muted);
+  }
+
+  :is(.qnode[data-state="active"], [data-state="active"] > .qnode) {
+    border-color: var(--accent);
+    background: var(--paper);
+    transform: scale(1.4);
+  }
+
+  :is(.qnode[data-state="active"], [data-state="active"] > .qnode)::before,
+  :is(.qnode[data-state="active"], [data-state="active"] > .qnode)::after {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .qnode,
+    .qnode::before,
+    .qnode::after {
+      transition: none;
+    }
+  }
 }
