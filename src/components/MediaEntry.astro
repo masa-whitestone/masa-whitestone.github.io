@@ -2,12 +2,16 @@
 import type { CollectionEntry } from "astro:content";
 import { formatDate } from "@/lib/format";
 
+type Media = CollectionEntry<"media">;
+
 interface Props {
-  entry: CollectionEntry<"media">;
+  entry: Media;
+  /** Pieces that picked up this story afterwards, listed beneath it. */
+  followUps?: Media[];
   compact?: boolean;
 }
 
-const { entry, compact = false } = Astro.props;
+const { entry, followUps = [], compact = false } = Astro.props;
 const m = entry.data;
 
 const kindLabel: Record<typeof m.kind, string> = {
@@ -36,27 +40,52 @@ const langName: Partial<Record<typeof m.language, string>> = {
     <span>{formatDate(m.date)}</span>
     <span aria-hidden="true">·</span>
     <span class="text-accent">{kindLabel[m.kind]}</span>
-    {
-      langName[m.language] && (
-        <>
-          <span aria-hidden="true">·</span>
-          <span>{langName[m.language]}</span>
-        </>
-      )
-    }
   </div>
 
   <h3 class="mb-2 font-serif text-lg leading-snug sm:text-xl">
     <a href={m.url} class="link" rel="noopener" lang={langTag[m.language]}>{m.title}</a>
   </h3>
 
-  {m.titleEn && <p class="mb-2 font-serif text-base text-ink-muted italic">“{m.titleEn}”</p>}
-
   <p class="mb-2 text-sm text-ink-muted">{m.outlet}</p>
 
   {
     !compact && m.note && (
       <p class="max-w-measure text-sm leading-relaxed text-ink-muted">{m.note}</p>
+    )
+  }
+
+  {
+    followUps.length > 0 && (
+      <div class="mt-5 border-l border-rule pl-5">
+        <p class="label mb-3">Also covered by</p>
+        <ul class="space-y-4">
+          {followUps.map((f) => (
+            <li>
+              <div class="label mb-1 flex flex-wrap items-center gap-x-3">
+                <span>{formatDate(f.data.date)}</span>
+                {langName[f.data.language] && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span>{langName[f.data.language]}</span>
+                  </>
+                )}
+              </div>
+              <p class="font-serif text-base leading-snug">
+                <a href={f.data.url} class="link" rel="noopener" lang={langTag[f.data.language]}>
+                  {f.data.title}
+                </a>
+              </p>
+              {f.data.titleEn && (
+                <p class="mt-0.5 font-serif text-sm text-ink-muted italic">“{f.data.titleEn}”</p>
+              )}
+              <p class="mt-1 max-w-measure text-sm leading-relaxed text-ink-muted">
+                {f.data.outlet}
+                {!compact && f.data.note && <span> — {f.data.note}</span>}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
     )
   }
 </article>

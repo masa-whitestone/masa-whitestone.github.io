@@ -21,10 +21,10 @@
   url: https://news.qq.com/rain/a/20260824A0AW8Q00
   kind: mention
   language: zh
+  follows: nature-vibe-code-quantum
   note: >-
-    Chinese feature following the Nature news piece. It describes our MCP
-    quantum-execution server deployed on AIST’s ABCI-Q, including the two-stage
-    PBS batch architecture and our evaluation results.
+    Describes our MCP quantum-execution server on AIST’s ABCI-Q, including the
+    two-stage PBS batch architecture and our evaluation results.
 
 - id: geekweek-agent-ai-quantum
   outlet: GeekWeek, Interia (Poland)
@@ -34,6 +34,7 @@
   url: https://geekweek.interia.pl/technologia/sztuczna-inteligencja/news-ai-rewolucjonizuje-fizyke-autonomiczny-agent-programuje-komp,nId,23531701
   kind: mention
   language: pl
+  follows: nature-vibe-code-quantum
   note: >-
-    Polish coverage of the Nature news piece. It mentions our work on
-    automating quantum-computer execution and cites our MCP server paper.
+    Mentions our work on automating quantum-computer execution and cites our
+    MCP server paper.

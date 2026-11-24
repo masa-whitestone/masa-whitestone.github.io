@@ -1,5 +1,5 @@
 ---
-import { getMedia } from "@/lib/media";
+import { getMediaStories } from "@/lib/media";
 import { getCollection, render } from "astro:content";
 import Base from "@/layouts/Base.astro";
 import Hero from "@/components/Hero.astro";
@@ -26,7 +26,7 @@ const talks = (await getCollection("talks")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 
-const media = await getMedia();
+const media = await getMediaStories();
 
 const awards = (await getCollection("awards")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
@@ -47,7 +47,7 @@ const highlights = [
     href: a.data.url,
   })),
   // Only featured coverage makes the front page; follow-up pieces stay in Media.
-  ...media.filter((m) => m.data.featured).map((m) => ({
+  ...media.map((s) => s.entry).filter((m) => m.data.featured).map((m) => ({
     date: m.data.date,
     label: m.data.outlet,
     title: m.data.title,
@@ -162,7 +162,7 @@ const researchBodies = await Promise.all(
 
   <Section id="media" more={media.length > 3 ? { label: "All media", href: "/media" } : undefined}>
     <div class="divide-y divide-rule">
-      {media.slice(0, 3).map((entry) => <MediaEntry entry={entry} />)}
+      {media.slice(0, 3).map((story) => <MediaEntry {...story} />)}
     </div>
   </Section>
 

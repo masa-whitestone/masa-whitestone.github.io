@@ -1,10 +1,10 @@
 ---
-import { getMedia } from "@/lib/media";
+import { getMediaStories } from "@/lib/media";
 import Base from "@/layouts/Base.astro";
 import MediaEntry from "@/components/MediaEntry.astro";
 import PageHeader from "@/components/PageHeader.astro";
 
-const media = await getMedia();
+const media = await getMediaStories();
 ---
 
 <Base
@@ -20,7 +20,7 @@ const media = await getMedia();
 
   <div class="pb-16">
     <div class="divide-y divide-rule">
-      {media.map((entry) => <MediaEntry entry={entry} />)}
+      {media.map((story) => <MediaEntry {...story} />)}
     </div>
   </div>
 </Base>

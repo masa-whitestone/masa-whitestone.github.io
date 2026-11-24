@@ -91,6 +91,8 @@ const media = defineCollection({
     language: z.enum(["en", "ja", "zh", "pl"]).default("en"),
     /** English rendering of a non-English headline, shown beneath it. */
     titleEn: z.string().optional(),
+    /** Id of the story this piece follows up on; it is listed beneath that story. */
+    follows: z.string().optional(),
     note: z.string().optional(),
     featured: z.boolean().default(false),
   }),
