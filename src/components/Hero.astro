@@ -4,54 +4,35 @@ import { getCollection } from "astro:content";
 import { site } from "@/data/site";
 import portrait from "@/assets/portrait.jpg";
 
-// "Where is he now" answered from the same data the timeline uses: anything
-// without an end date, or whose end date hasn't arrived yet.
 const now = new Date();
 const current = (await getCollection("experience"))
   .filter((entry) => !entry.data.end || entry.data.end > now)
   .sort((a, b) => b.data.start.getTime() - a.data.start.getTime());
 ---
 
-<section class="mx-auto max-w-band px-6 pt-16 pb-16 sm:pt-20 sm:pb-20">
-  <div class="lg:grid lg:grid-cols-[7rem_1fr] lg:gap-10">
-    <div aria-hidden="true"></div>
-
-    <div class="grid gap-10 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-14">
-      <div>
-        <h1 class="mb-4 text-5xl leading-[1.05] sm:text-6xl">{site.name}</h1>
-
-        <p class="label mb-6">{site.title}</p>
-
-        <p
-          class="mb-8 max-w-measure font-serif text-xl leading-relaxed text-ink sm:text-2xl"
-        >
-          {site.tagline}
-        </p>
-
-        <div class="max-w-measure">
-          <p class="label mb-2">Currently</p>
-          <ul class="space-y-1 text-sm text-ink-muted">
-            {
-              current.map((entry) => (
-                <li>
-                  <span class="text-ink">{entry.data.role}</span>
-                  <span class="text-ink-faint"> · {entry.data.organization}</span>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
-
-      <Image
-        src={portrait}
-        alt={`Portrait of ${site.name}`}
-        width={176}
-        height={176}
-        quality={90}
-        loading="eager"
-        class="order-first h-36 w-36 rounded-full border border-rule object-cover sm:order-none sm:h-44 sm:w-44"
-      />
-    </div>
-  </div>
-</section>
+<!-- Narrow screens only: on wide screens the sidebar is the introduction. -->
+<div class="pt-10 pb-12 lg:hidden">
+  <Image
+    src={portrait}
+    alt={`Portrait of ${site.name}`}
+    width={176}
+    height={176}
+    quality={90}
+    loading="eager"
+    class="mb-8 h-28 w-28 rounded-full border border-rule object-cover"
+  />
+  <h1 class="mb-4 text-5xl leading-[0.95] tracking-tight">Masaki<br />Shiraishi</h1>
+  <p class="label mb-6">{site.title}</p>
+  <p class="mb-8 font-serif text-xl leading-relaxed">{site.tagline}</p>
+  <p class="label mb-2">Currently</p>
+  <ul class="space-y-1 text-sm text-ink-muted">
+    {
+      current.map((entry) => (
+        <li>
+          <span class="text-ink">{entry.data.role}</span>
+          <span class="text-ink-faint"> · {entry.data.organization}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>

@@ -1,0 +1,240 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import portrait from "@/assets/portrait.jpg";
+import { site, links } from "@/data/site";
+import { sections, type SectionId } from "@/lib/sections";
+import Icon from "@/components/Icon.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
+
+interface Props {
+  /** On pages other than home, the section that page belongs to. */
+  active?: SectionId;
+}
+
+const { active } = Astro.props;
+const onHome = Astro.url.pathname === "/";
+
+// Like page numbers in a journal's contents: what is behind each node, before
+// you jump to it. Sections that are not collections carry no count.
+const counts: Partial<Record<SectionId, number>> = {
+  research: (await getCollection("research")).length,
+  publications: (await getCollection("publications")).length,
+  talks: (await getCollection("talks")).length,
+  media: (await getCollection("media")).length,
+  experience: (await getCollection("experience")).length,
+  awards: (await getCollection("awards")).length,
+};
+
+const now = new Date();
+const current = (await getCollection("experience"))
+  .filter((e) => !e.data.end || e.data.end > now)
+  .sort((a, b) => b.data.start.getTime() - a.data.start.getTime());
+
+const activeIndex = active ? sections.findIndex((s) => s.id === active) : 0;
+const stateOf = (i: number) =>
+  i < activeIndex ? "past" : i === activeIndex ? "active" : "future";
+---
+
+<aside
+  class="sidebar sticky top-0 hidden h-screen flex-col overflow-y-auto py-10 pr-2 lg:flex [@media(max-height:860px)]:py-7"
+  aria-label="Site"
+>
+  <a href={onHome ? "#top" : "/"} class="group mb-6 block">
+    <Image
+      src={portrait}
+      alt=""
+      width={160}
+      height={160}
+      loading="eager"
+      class="mb-5 h-20 w-20 rounded-full border border-rule object-cover [@media(max-height:860px)]:mb-3 [@media(max-height:860px)]:h-14 [@media(max-height:860px)]:w-14"
+    />
+    <span class="block font-serif text-[2.6rem] leading-[0.95] tracking-tight transition-colors group-hover:text-accent">
+      Masaki<br />Shiraishi
+    </span>
+  </a>
+
+  <p class="label mb-4">{site.title}</p>
+  <p class="mb-5 font-serif text-[1.05rem] leading-snug text-ink-muted [@media(max-height:700px)]:hidden">{site.tagline}</p>
+
+  <ul class="mb-8 space-y-1 text-xs text-ink-muted [@media(max-height:860px)]:hidden">
+    {
+      current.map((e) => (
+        <li>
+          <span class="text-ink">{e.data.role}</span>
+          <span class="text-ink-faint"> · {e.data.organization}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <!-- The wire: sections are nodes on one line, and the stretch already read
+       fills in as the page scrolls. -->
+  <nav class="wire relative" aria-label="Sections" data-wire>
+    <span class="wire-track pointer-events-none absolute w-px bg-ink-faint/45" aria-hidden="true"></span>
+    <span class="wire-fill pointer-events-none absolute w-px origin-top bg-ink/60" aria-hidden="true"></span>
+    <ol>
+      {
+        sections.map((s, i) => (
+          <li>
+            <a
+              href={onHome ? `#${s.id}` : `/#${s.id}`}
+              class="wire-item group flex h-[1.9rem] items-center gap-3 text-sm"
+              data-node={s.id}
+              data-state={stateOf(i)}
+              aria-current={i === activeIndex && active ? "page" : undefined}
+            >
+              <span class="node relative z-10 h-[9px] w-[9px] shrink-0 border" aria-hidden="true" />
+              <span class="w-5 font-mono text-[10px] text-ink-faint">{String(i).padStart(2, "0")}</span>
+              <span class="wire-label">{s.title}</span>
+              {counts[s.id] !== undefined && (
+                <>
+                  <span class="mx-1 mb-1 flex-1 self-end border-b border-dotted border-rule" aria-hidden="true" />
+                  <span class="font-mono text-[10px] text-ink-faint">{counts[s.id]}</span>
+                </>
+              )}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <div class="mt-auto flex items-center gap-2 pt-8">
+    {
+      links.map((l) => (
+        <a
+          href={l.href}
+          rel={l.href.startsWith("http") ? "noopener" : undefined}
+          title={l.handle ?? l.label}
+          aria-label={l.handle ? `${l.label}: ${l.handle}` : l.label}
+          class="flex h-8 w-8 items-center justify-center rounded-full border border-rule text-ink-muted transition-colors hover:border-accent hover:text-accent"
+        >
+          <Icon name={l.icon} class="h-3.5 w-3.5" />
+        </a>
+      ))
+    }
+    <span class="ml-auto"><ThemeToggle /></span>
+  </div>
+</aside>
+
+<style>
+  /* Node states: read (filled ink), here (accent), ahead (hollow). */
+  .wire-item .node {
+    border-color: var(--ink-faint);
+    background: var(--paper);
+    transition: background-color 200ms ease, border-color 200ms ease, transform 200ms ease;
+  }
+  .wire-item[data-state="past"] .node {
+    background: var(--ink-muted);
+    border-color: var(--ink-muted);
+  }
+  .wire-item[data-state="active"] .node {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.25);
+  }
+  .wire-item .wire-label {
+    color: var(--ink-muted);
+    transition: color 150ms ease;
+  }
+  .wire-item[data-state="active"] .wire-label,
+  .wire-item:hover .wire-label {
+    color: var(--ink);
+  }
+  .wire-item:hover .node {
+    border-color: var(--accent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wire-item .node,
+    .wire-fill {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  const wire = document.querySelector<HTMLElement>("[data-wire]");
+  const track = wire?.querySelector<HTMLElement>(".wire-track");
+  const fill = wire?.querySelector<HTMLElement>(".wire-fill");
+  const items = [...(wire?.querySelectorAll<HTMLAnchorElement>("[data-node]") ?? [])];
+  const targets = items.map((a) => document.getElementById(a.dataset.node!));
+  const headerNodes = [...document.querySelectorAll<HTMLElement>("[data-section-node]")];
+
+  // Node centres in the nav's own coordinates — where the wire bends.
+  const centres = () => {
+    const top = wire!.getBoundingClientRect().top;
+    return items.map((a) => {
+      const n = a.querySelector(".node")!.getBoundingClientRect();
+      return { x: n.left - wire!.getBoundingClientRect().left + n.width / 2, y: n.top - top + n.height / 2 };
+    });
+  };
+
+  const layout = () => {
+    if (!wire || !track || !fill || items.length === 0) return;
+    const c = centres();
+    for (const el of [track, fill]) {
+      el.style.left = `${c[0].x - 0.5}px`;
+      el.style.top = `${c[0].y}px`;
+    }
+    track.style.height = `${c[c.length - 1].y - c[0].y}px`;
+    return c;
+  };
+
+  const setState = (activeIndex: number) => {
+    items.forEach((a, i) => {
+      const state = i < activeIndex ? "past" : i === activeIndex ? "active" : "future";
+      a.dataset.state = state;
+      if (i === activeIndex) a.setAttribute("aria-current", "location");
+      else a.removeAttribute("aria-current");
+    });
+    headerNodes.forEach((n) => {
+      const i = items.findIndex((a) => a.dataset.node === n.dataset.sectionNode);
+      n.dataset.state = i < activeIndex ? "past" : i === activeIndex ? "active" : "future";
+    });
+  };
+
+  let centresCache = layout();
+
+  // Only the home page has the sections to track; elsewhere the state the
+  // server rendered (the page's own section) stands.
+  const onHome = targets.every(Boolean);
+
+  const update = () => {
+    if (!onHome || !fill || !centresCache) return;
+    const probe = window.innerHeight * 0.3;
+    const tops = targets.map((t) => t!.getBoundingClientRect().top);
+    let i = 0;
+    for (let k = 0; k < tops.length; k++) if (tops[k] <= probe) i = k;
+
+    // How far through section i the reader is, so the fill glides between
+    // nodes instead of jumping.
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    if (atBottom) i = items.length - 1;
+    const start = tops[i];
+    const end = i + 1 < tops.length ? tops[i + 1] : start + targets[i]!.offsetHeight;
+    const frac = atBottom ? 0 : Math.min(1, Math.max(0, (probe - start) / Math.max(1, end - start)));
+    const c = centresCache;
+    const y = c[i].y + (i + 1 < c.length ? frac * (c[i + 1].y - c[i].y) : 0);
+    fill.style.height = `${Math.max(0, y - c[0].y)}px`;
+    setState(i);
+  };
+
+  if (!onHome && fill && centresCache) {
+    // Fill the wire up to the page's own node.
+    const activeIdx = items.findIndex((a) => a.dataset.state === "active");
+    fill.style.height = `${Math.max(0, centresCache[Math.max(0, activeIdx)].y - centresCache[0].y)}px`;
+  }
+
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", () => {
+    centresCache = layout();
+    update();
+  });
+  // Fonts settle the label widths and line heights after first paint.
+  document.fonts?.ready.then(() => {
+    centresCache = layout();
+    update();
+  });
+  update();
+</script>

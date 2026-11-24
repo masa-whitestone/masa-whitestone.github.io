@@ -15,10 +15,9 @@ interface Props {
 const { src, alt, number, caption, source } = Astro.props;
 ---
 
-<!-- A two-column journal figure needs more room than the prose band: this
-     plate is deliberately wider than every other section on the page. -->
-<section class="border-t border-rule py-12 sm:py-16">
-  <div class="mx-auto max-w-[68rem] px-6">
+<!-- A two-column journal figure takes the full width of the content pane. -->
+<figure class="mt-12">
+  <div>
     <a
       href={src.src}
       class="block border border-rule bg-white p-3 sm:p-5"
@@ -28,7 +27,7 @@ const { src, alt, number, caption, source } = Astro.props;
         src={src}
         alt={alt}
         widths={[720, 1080, 1600, 2200]}
-        sizes="(min-width: 70rem) 65rem, 100vw"
+        sizes="(min-width: 64rem) 58rem, 100vw"
         quality={92}
         loading="lazy"
         class="w-full"
@@ -51,4 +50,4 @@ const { src, alt, number, caption, source } = Astro.props;
       <span class="mt-1 block text-ink-faint">Click to view at full size.</span>
     </figcaption>
   </div>
-</section>
+</figure>

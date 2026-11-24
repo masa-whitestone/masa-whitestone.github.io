@@ -3,15 +3,19 @@ import "@/styles/global.css";
 import { site } from "@/data/site";
 import Masthead from "@/components/Masthead.astro";
 import Colophon from "@/components/Colophon.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import type { SectionId } from "@/lib/sections";
 import { getImage } from "astro:assets";
 import portrait from "@/assets/portrait.jpg";
 
 interface Props {
   title?: string;
   description?: string;
+  /** Pages other than home: which section of the wire they belong to. */
+  section?: SectionId;
 }
 
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description, section } = Astro.props;
 const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.title}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const og = await getImage({ src: portrait, width: 1200, height: 1200, format: "jpg" });
@@ -58,10 +62,18 @@ const ogImage = new URL(og.src, Astro.site).href;
       class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-paper focus:px-4 focus:py-2 focus:text-sm"
       >Skip to content</a
     >
+    <span id="top"></span>
     <Masthead />
-    <main id="main">
-      <slot />
-    </main>
-    <Colophon />
+    <!-- Two panes on wide screens: identity and the section wire stay put on
+         the left while the work scrolls on the right. -->
+    <div class="mx-auto max-w-[88rem] px-6 lg:grid lg:grid-cols-[19rem_minmax(0,1fr)] lg:gap-14 lg:px-10">
+      <Sidebar active={section} />
+      <div class="min-w-0 lg:border-l lg:border-rule lg:pl-14">
+        <main id="main">
+          <slot />
+        </main>
+        <Colophon />
+      </div>
+    </div>
   </body>
 </html>

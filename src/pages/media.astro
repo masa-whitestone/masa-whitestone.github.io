@@ -10,6 +10,7 @@ const media = (await getCollection("media")).sort(
 ---
 
 <Base
+  section="media"
   title="Media"
   description="Press coverage, interviews and commentary featuring Masaki Shiraishi."
 >
@@ -19,7 +20,7 @@ const media = (await getCollection("media")).sort(
     intro="Coverage in which I was interviewed, quoted, or otherwise mentioned."
   />
 
-  <div class="mx-auto max-w-band px-6 pb-20">
+  <div class="pb-16">
     <div class="divide-y divide-rule">
       {media.map((entry) => <MediaEntry entry={entry} />)}
     </div>

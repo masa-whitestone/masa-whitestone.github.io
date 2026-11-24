@@ -1,92 +1,55 @@
 ---
 import { site } from "@/data/site";
+import { sections } from "@/lib/sections";
 import ThemeToggle from "@/components/ThemeToggle.astro";
 
-const nav = [
-  { label: "Research", href: "/#research" },
-  { label: "Publications", href: "/publications" },
-  { label: "Talks", href: "/#talks" },
-  { label: "Media", href: "/media" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Awards", href: "/#awards" },
-  { label: "Contact", href: "/#contact" },
-];
+const onHome = Astro.url.pathname === "/";
+const nav = sections.map((s) => ({ label: s.title, href: onHome ? `#${s.id}` : `/#${s.id}` }));
 ---
 
-<header class="sticky top-0 z-40 border-b border-rule bg-paper/85 backdrop-blur-sm">
-  <div class="mx-auto flex h-16 max-w-band items-center justify-between gap-6 px-6">
-    <a href="/" class="font-serif text-base tracking-tight whitespace-nowrap">
+<!-- Narrow screens only: on wide ones the sidebar carries identity and
+     navigation. -->
+<header class="sticky top-0 z-40 border-b border-rule bg-paper/90 backdrop-blur-sm lg:hidden">
+  <div class="mx-auto flex h-14 items-center justify-between gap-6 px-6">
+    <a href={onHome ? "#top" : "/"} class="font-serif text-base tracking-tight whitespace-nowrap">
       {site.name}
     </a>
 
-    <nav class="flex items-center gap-5" aria-label="Primary">
-      <!-- Wide screens: the links inline. -->
-      <ul class="hidden items-center gap-5 md:flex">
-        {
-          nav.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="text-sm text-ink-muted transition-colors hover:text-accent"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-
-      <!-- Narrow screens: a disclosure menu, no JavaScript involved. -->
-      <details class="menu relative md:hidden">
+    <nav class="flex items-center gap-5" aria-label="Sections">
+      <details class="menu relative">
         <summary class="label cursor-pointer list-none transition-colors hover:text-accent">
           <span class="menu-closed">Menu</span>
           <span class="menu-open">Close</span>
         </summary>
-        <ul
-          class="absolute right-0 z-50 mt-3 min-w-44 border border-rule bg-paper py-2 shadow-sm"
-        >
+        <ol class="absolute right-0 z-50 mt-3 min-w-52 border border-rule bg-paper py-2 shadow-sm">
           {
-            nav.map((item) => (
+            nav.map((item, i) => (
               <li>
-                <a
-                  href={item.href}
-                  class="block px-4 py-2 text-sm text-ink-muted transition-colors hover:text-accent"
-                >
+                <a href={item.href} class="flex items-baseline gap-3 px-4 py-2 text-sm text-ink-muted transition-colors hover:text-accent">
+                  <span class="font-mono text-[10px] text-accent">{String(i).padStart(2, "0")}</span>
                   {item.label}
                 </a>
               </li>
             ))
           }
-        </ul>
+        </ol>
       </details>
-
       <ThemeToggle />
     </nav>
   </div>
+  <!-- Reading progress: the narrow-screen echo of the sidebar's wire. -->
+  <span class="masthead-progress absolute bottom-[-1px] left-0 h-px w-full origin-left bg-accent" style="transform: scaleX(0)" aria-hidden="true"></span>
 </header>
 
 <style>
-  /* Hide the native disclosure triangle across engines. */
-  .menu summary::-webkit-details-marker {
-    display: none;
-  }
-  .menu summary::marker {
-    content: "";
-  }
-  .menu .menu-open {
-    display: none;
-  }
-  .menu[open] .menu-closed {
-    display: none;
-  }
-  .menu[open] .menu-open {
-    display: inline;
-  }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu summary::marker { content: ""; }
+  .menu .menu-open { display: none; }
+  .menu[open] .menu-closed { display: none; }
+  .menu[open] .menu-open { display: inline; }
 </style>
 
 <script>
-  // A disclosure menu that stays open after navigation feels broken; close it
-  // when focus or a tap lands outside, and on Escape.
   document.querySelectorAll<HTMLDetailsElement>("details.menu").forEach((menu) => {
     document.addEventListener("click", (event) => {
       if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
@@ -94,10 +57,14 @@ const nav = [
     menu.addEventListener("keydown", (event) => {
       if (event.key === "Escape") menu.open = false;
     });
-    menu.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        menu.open = false;
-      });
-    });
+    menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => (menu.open = false)));
   });
+
+  const bar = document.querySelector<HTMLElement>(".masthead-progress");
+  const progress = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (bar) bar.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
+  };
+  window.addEventListener("scroll", progress, { passive: true });
+  progress();
 </script>
