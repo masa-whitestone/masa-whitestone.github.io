@@ -10,3 +10,30 @@
     Interviewed for this news article, where I commented on Pasqal’s AI system
     for quantum computing. The piece also refers to our own research and
     development work.
+
+- id: tencent-quantumchina-vibe-coding
+  outlet: Tencent News · QuantumChina (光子盒)
+  title: 一人干翻一个物理团队？Nature发文：量子计算也能Vibe Coding了
+  titleEn: >-
+    One person against a whole physics team? Nature: quantum computing can be
+    vibe-coded too
+  date: 2026-08-24
+  url: https://news.qq.com/rain/a/20260824A0AW8Q00
+  kind: mention
+  language: zh
+  note: >-
+    Chinese feature following the Nature news piece. It describes our MCP
+    quantum-execution server deployed on AIST’s ABCI-Q, including the two-stage
+    PBS batch architecture and our evaluation results.
+
+- id: geekweek-agent-ai-quantum
+  outlet: GeekWeek, Interia (Poland)
+  title: Rewolucja w kodowaniu. Agent AI programuje komputery kwantowe
+  titleEn: "A revolution in coding: an AI agent programs quantum computers"
+  date: 2026-08-24
+  url: https://geekweek.interia.pl/technologia/sztuczna-inteligencja/news-ai-rewolucjonizuje-fizyke-autonomiczny-agent-programuje-komp,nId,23531701
+  kind: mention
+  language: pl
+  note: >-
+    Polish coverage of the Nature news piece. It mentions our work on
+    automating quantum-computer execution and cites our MCP server paper.

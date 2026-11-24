@@ -16,6 +16,19 @@ const kindLabel: Record<typeof m.kind, string> = {
   mention: "Mentioned",
   byline: "Written by me",
 };
+
+// BCP 47 tags so screen readers and fonts treat each headline correctly.
+const langTag: Record<typeof m.language, string> = {
+  en: "en",
+  ja: "ja",
+  zh: "zh-Hans",
+  pl: "pl",
+};
+const langName: Partial<Record<typeof m.language, string>> = {
+  ja: "In Japanese",
+  zh: "In Chinese",
+  pl: "In Polish",
+};
 ---
 
 <article class="py-6 first:pt-0">
@@ -23,11 +36,21 @@ const kindLabel: Record<typeof m.kind, string> = {
     <span>{formatDate(m.date)}</span>
     <span aria-hidden="true">·</span>
     <span class="text-accent">{kindLabel[m.kind]}</span>
+    {
+      langName[m.language] && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>{langName[m.language]}</span>
+        </>
+      )
+    }
   </div>
 
   <h3 class="mb-2 font-serif text-lg leading-snug sm:text-xl">
-    <a href={m.url} class="link" rel="noopener">{m.title}</a>
+    <a href={m.url} class="link" rel="noopener" lang={langTag[m.language]}>{m.title}</a>
   </h3>
+
+  {m.titleEn && <p class="mb-2 font-serif text-base text-ink-muted italic">“{m.titleEn}”</p>}
 
   <p class="mb-2 text-sm text-ink-muted">{m.outlet}</p>
 

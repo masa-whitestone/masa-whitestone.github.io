@@ -47,11 +47,12 @@ const highlights = [
     detail: a.data.program ?? a.data.organization,
     href: a.data.url,
   })),
-  ...media.map((m) => ({
+  // Only featured coverage makes the front page; follow-up pieces stay in Media.
+  ...media.filter((m) => m.data.featured).map((m) => ({
     date: m.data.date,
     label: m.data.outlet,
     title: m.data.title,
-    detail: "Quoted in this news article",
+    detail: m.data.kind === "comment" ? "Quoted in this news article" : "Featured in this news article",
     href: m.data.url,
   })),
   ...publications.map((p) => ({

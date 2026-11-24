@@ -88,7 +88,9 @@ const media = defineCollection({
     url: z.url(),
     /** How I appear in the piece — keeps "quoted" honest vs. "wrote". */
     kind: z.enum(["comment", "interview", "mention", "byline"]),
-    language: z.enum(["en", "ja"]).default("en"),
+    language: z.enum(["en", "ja", "zh", "pl"]).default("en"),
+    /** English rendering of a non-English headline, shown beneath it. */
+    titleEn: z.string().optional(),
     note: z.string().optional(),
     featured: z.boolean().default(false),
   }),
