@@ -1,12 +1,10 @@
 ---
-import { getCollection } from "astro:content";
+import { getMedia } from "@/lib/media";
 import Base from "@/layouts/Base.astro";
 import MediaEntry from "@/components/MediaEntry.astro";
 import PageHeader from "@/components/PageHeader.astro";
 
-const media = (await getCollection("media")).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
+const media = await getMedia();
 ---
 
 <Base

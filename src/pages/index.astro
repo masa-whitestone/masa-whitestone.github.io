@@ -1,4 +1,5 @@
 ---
+import { getMedia } from "@/lib/media";
 import { getCollection, render } from "astro:content";
 import Base from "@/layouts/Base.astro";
 import Hero from "@/components/Hero.astro";
@@ -25,9 +26,7 @@ const talks = (await getCollection("talks")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 
-const media = (await getCollection("media")).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
+const media = await getMedia();
 
 const awards = (await getCollection("awards")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
