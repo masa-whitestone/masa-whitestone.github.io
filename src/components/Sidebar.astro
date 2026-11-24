@@ -36,8 +36,11 @@ const stateOf = (i: number) =>
   i < activeIndex ? "past" : i === activeIndex ? "active" : "future";
 ---
 
+<!-- overflow-y lets a short window scroll the sidebar, but it also clips
+     horizontally: -ml-1/pl-1 gives the enlarged ⊕ room at the left edge
+     without moving anything that aligns with it. -->
 <aside
-  class="sidebar sticky top-0 hidden h-screen flex-col overflow-y-auto py-10 pr-2 lg:flex [@media(max-height:860px)]:py-7"
+  class="sidebar sticky top-0 -ml-1 hidden h-screen flex-col overflow-y-auto py-10 pr-2 pl-1 lg:flex [@media(max-height:860px)]:py-7"
   aria-label="Site"
 >
   <a href={onHome ? "#top" : "/"} class="group mb-6 block">
